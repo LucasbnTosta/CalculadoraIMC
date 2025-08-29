@@ -1,0 +1,197 @@
+<html>
+<head>
+<title>MainActivity.kt</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #6a8759;}
+.s3 { color: #6897bb;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+MainActivity.kt</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.example.calculadoraimc</span>
+
+<span class="s1">import android.os.Bundle</span>
+<span class="s1">import androidx.activity.ComponentActivity</span>
+<span class="s1">import androidx.activity.compose.setContent</span>
+<span class="s1">import androidx.compose.foundation.background</span>
+<span class="s1">import androidx.compose.foundation.layout.*</span>
+<span class="s1">import androidx.compose.foundation.lazy.LazyColumn</span>
+<span class="s1">import androidx.compose.foundation.lazy.items</span>
+<span class="s1">import androidx.compose.material3.*</span>
+<span class="s1">import androidx.compose.runtime.*</span>
+<span class="s1">import androidx.compose.ui.Alignment</span>
+<span class="s1">import androidx.compose.ui.Modifier</span>
+<span class="s1">import androidx.compose.ui.graphics.Color</span>
+<span class="s1">import androidx.compose.ui.text.font.FontWeight</span>
+<span class="s1">import androidx.compose.ui.tooling.preview.Preview</span>
+<span class="s1">import androidx.compose.ui.unit.dp</span>
+<span class="s1">import androidx.compose.ui.unit.sp</span>
+<span class="s1">import com.example.calculadoraimc.ui.theme.CalculadoraIMCTheme</span>
+
+<span class="s0">class </span><span class="s1">MainActivity : ComponentActivity() {</span>
+    <span class="s1">override </span><span class="s0">fun </span><span class="s1">onCreate(savedInstanceState: Bundle?) {</span>
+        <span class="s0">super</span><span class="s1">.onCreate(savedInstanceState)</span>
+        <span class="s1">setContent {</span>
+            <span class="s1">CalculadoraIMCTheme {</span>
+                <span class="s1">Surface(</span>
+                    <span class="s1">modifier = Modifier.fillMaxSize()</span><span class="s0">,</span>
+                    <span class="s1">color = MaterialTheme.colorScheme.background</span>
+                <span class="s1">) {</span>
+                    <span class="s1">CalculadoraIMCScreen()</span>
+                <span class="s1">}</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+
+<span class="s1">@Composable</span>
+<span class="s0">fun </span><span class="s1">CalculadoraIMCScreen() {</span>
+    <span class="s0">var </span><span class="s1">peso by remember { mutableStateOf(</span><span class="s2">&quot;&quot;</span><span class="s1">) }</span>
+    <span class="s0">var </span><span class="s1">altura by remember { mutableStateOf(</span><span class="s2">&quot;&quot;</span><span class="s1">) }</span>
+    <span class="s0">var </span><span class="s1">resultado by remember { mutableStateOf(</span><span class="s2">&quot;&quot;</span><span class="s1">) }</span>
+    <span class="s0">var </span><span class="s1">emoji by remember { mutableStateOf(</span><span class="s2">&quot;&quot;</span><span class="s1">) }</span>
+    <span class="s0">var </span><span class="s1">historico by remember { mutableStateOf(listOf&lt;String&gt;()) }</span>
+
+    <span class="s1">Column(</span>
+        <span class="s1">modifier = Modifier</span>
+            <span class="s1">.padding(</span><span class="s3">16</span><span class="s1">.dp)</span>
+            <span class="s1">.fillMaxSize()</span><span class="s0">,</span>
+        <span class="s1">horizontalAlignment = Alignment.CenterHorizontally</span>
+    <span class="s1">) {</span>
+        <span class="s1">Text(</span>
+            <span class="s1">text = </span><span class="s2">&quot;Calculadora de IMC&quot;</span><span class="s0">,</span>
+            <span class="s1">fontSize = </span><span class="s3">28</span><span class="s1">.sp</span><span class="s0">,</span>
+            <span class="s1">fontWeight = FontWeight.Bold</span><span class="s0">,</span>
+            <span class="s1">color = MaterialTheme.colorScheme.primary</span><span class="s0">,</span>
+            <span class="s1">modifier = Modifier.padding(bottom = </span><span class="s3">24</span><span class="s1">.dp)</span>
+        <span class="s1">)</span>
+
+        <span class="s1">OutlinedTextField(</span>
+            <span class="s1">value = peso</span><span class="s0">,</span>
+            <span class="s1">onValueChange = { peso = it }</span><span class="s0">,</span>
+            <span class="s1">label = { Text(</span><span class="s2">&quot;Peso (kg)&quot;</span><span class="s1">) }</span><span class="s0">,</span>
+            <span class="s1">placeholder = { Text(</span><span class="s2">&quot;Ex: 70.5&quot;</span><span class="s1">) }</span><span class="s0">,</span>
+            <span class="s1">modifier = Modifier.fillMaxWidth()</span>
+        <span class="s1">)</span>
+
+        <span class="s1">Spacer(modifier = Modifier.height(</span><span class="s3">16</span><span class="s1">.dp))</span>
+
+        <span class="s1">OutlinedTextField(</span>
+            <span class="s1">value = altura</span><span class="s0">,</span>
+            <span class="s1">onValueChange = { altura = it }</span><span class="s0">,</span>
+            <span class="s1">label = { Text(</span><span class="s2">&quot;Altura (m)&quot;</span><span class="s1">) }</span><span class="s0">,</span>
+            <span class="s1">placeholder = { Text(</span><span class="s2">&quot;Ex: 1.75&quot;</span><span class="s1">) }</span><span class="s0">,</span>
+            <span class="s1">modifier = Modifier.fillMaxWidth()</span>
+        <span class="s1">)</span>
+
+        <span class="s1">Spacer(modifier = Modifier.height(</span><span class="s3">24</span><span class="s1">.dp))</span>
+
+        <span class="s1">Button(</span>
+            <span class="s1">onClick = {</span>
+                <span class="s0">val </span><span class="s1">pesoNum = peso.trim()</span>
+                <span class="s0">val </span><span class="s1">alturaNum = altura.trim()</span>
+
+                <span class="s0">if </span><span class="s1">(pesoNum.isNotEmpty() &amp;&amp; alturaNum.isNotEmpty()) {</span>
+                    <span class="s0">try </span><span class="s1">{</span>
+                        <span class="s0">val </span><span class="s1">imc = pesoNum.toFloat() / (alturaNum.toFloat() * alturaNum.toFloat())</span>
+                        <span class="s0">val </span><span class="s1">classificacao = classificarIMC(imc)</span>
+                        <span class="s0">val </span><span class="s1">emojiIcon = emojiParaIMC(imc)</span>
+                        <span class="s1">resultado = </span><span class="s2">&quot;Seu IMC: %.2f</span><span class="s0">\n</span><span class="s2">Classificação: %s&quot;</span><span class="s1">.format(imc</span><span class="s0">, </span><span class="s1">classificacao)</span>
+                        <span class="s1">emoji = emojiIcon</span>
+
+                        <span class="s1">historico = listOf(</span><span class="s2">&quot;IMC: %.2f - %s %s&quot;</span><span class="s1">.format(imc</span><span class="s0">, </span><span class="s1">classificacao</span><span class="s0">, </span><span class="s1">emojiIcon)) + historico</span>
+                    <span class="s1">} catch (e: Exception) {</span>
+                        <span class="s1">resultado = </span><span class="s2">&quot;Insira valores numéricos válidos.&quot;</span>
+                        <span class="s1">emoji = </span><span class="s2">&quot;❌&quot;</span>
+                    <span class="s1">}</span>
+                <span class="s1">} </span><span class="s0">else </span><span class="s1">{</span>
+                    <span class="s1">resultado = </span><span class="s2">&quot;Preencha todos os campos!&quot;</span>
+                    <span class="s1">emoji = </span><span class="s2">&quot;⚠️&quot;</span>
+                <span class="s1">}</span>
+            <span class="s1">}</span><span class="s0">,</span>
+            <span class="s1">modifier = Modifier.fillMaxWidth()</span><span class="s0">,</span>
+            <span class="s1">colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)</span>
+        <span class="s1">) {</span>
+            <span class="s1">Text(</span><span class="s2">&quot;Calcular IMC&quot;</span><span class="s0">, </span><span class="s1">color = Color.White)</span>
+        <span class="s1">}</span>
+
+        <span class="s1">Spacer(modifier = Modifier.height(</span><span class="s3">24</span><span class="s1">.dp))</span>
+
+        <span class="s0">if </span><span class="s1">(resultado.isNotEmpty()) {</span>
+            <span class="s1">Text(</span>
+                <span class="s1">text = resultado</span><span class="s0">,</span>
+                <span class="s1">fontSize = </span><span class="s3">20</span><span class="s1">.sp</span><span class="s0">,</span>
+                <span class="s1">fontWeight = FontWeight.SemiBold</span><span class="s0">,</span>
+                <span class="s1">color = MaterialTheme.colorScheme.onBackground</span>
+            <span class="s1">)</span>
+            <span class="s1">Text(</span>
+                <span class="s1">text = emoji</span><span class="s0">,</span>
+                <span class="s1">fontSize = </span><span class="s3">32</span><span class="s1">.sp</span>
+            <span class="s1">)</span>
+        <span class="s1">}</span>
+
+        <span class="s1">Spacer(modifier = Modifier.height(</span><span class="s3">24</span><span class="s1">.dp))</span>
+
+        <span class="s0">if </span><span class="s1">(historico.isNotEmpty()) {</span>
+            <span class="s1">Text(</span>
+                <span class="s1">text = </span><span class="s2">&quot;Histórico:&quot;</span><span class="s0">,</span>
+                <span class="s1">fontWeight = FontWeight.Bold</span><span class="s0">,</span>
+                <span class="s1">fontSize = </span><span class="s3">18</span><span class="s1">.sp</span><span class="s0">,</span>
+                <span class="s1">modifier = Modifier.align(Alignment.Start)</span>
+            <span class="s1">)</span>
+
+            <span class="s1">LazyColumn(modifier = Modifier.fillMaxWidth().weight(</span><span class="s3">1f</span><span class="s1">)) {</span>
+                <span class="s1">items(historico) { item -&gt;</span>
+                    <span class="s1">Text(</span>
+                        <span class="s1">text = item</span><span class="s0">,</span>
+                        <span class="s1">modifier = Modifier</span>
+                            <span class="s1">.padding(vertical = </span><span class="s3">4</span><span class="s1">.dp)</span>
+                            <span class="s1">.background(Color(</span><span class="s3">0xFFF1F1F1</span><span class="s1">))</span>
+                            <span class="s1">.fillMaxWidth()</span>
+                            <span class="s1">.padding(</span><span class="s3">8</span><span class="s1">.dp)</span>
+                    <span class="s1">)</span>
+                <span class="s1">}</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+
+<span class="s1">private </span><span class="s0">fun </span><span class="s1">classificarIMC(imc: Float): String {</span>
+    <span class="s0">return when </span><span class="s1">{</span>
+        <span class="s1">imc &lt; </span><span class="s3">18.5 </span><span class="s1">-&gt; </span><span class="s2">&quot;Abaixo do peso&quot;</span>
+        <span class="s1">imc &lt; </span><span class="s3">24.9 </span><span class="s1">-&gt; </span><span class="s2">&quot;Peso normal&quot;</span>
+        <span class="s1">imc &lt; </span><span class="s3">29.9 </span><span class="s1">-&gt; </span><span class="s2">&quot;Sobrepeso&quot;</span>
+        <span class="s1">imc &lt; </span><span class="s3">34.9 </span><span class="s1">-&gt; </span><span class="s2">&quot;Obesidade Grau I&quot;</span>
+        <span class="s1">imc &lt; </span><span class="s3">39.9 </span><span class="s1">-&gt; </span><span class="s2">&quot;Obesidade Grau II&quot;</span>
+        <span class="s0">else </span><span class="s1">-&gt; </span><span class="s2">&quot;Obesidade Grau III&quot;</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+
+<span class="s1">private </span><span class="s0">fun </span><span class="s1">emojiParaIMC(imc: Float): String {</span>
+    <span class="s0">return when </span><span class="s1">{</span>
+        <span class="s1">imc &lt; </span><span class="s3">18.5 </span><span class="s1">-&gt; </span><span class="s2">&quot;😟&quot;</span>
+        <span class="s1">imc &lt; </span><span class="s3">24.9 </span><span class="s1">-&gt; </span><span class="s2">&quot;😃&quot;</span>
+        <span class="s1">imc &lt; </span><span class="s3">29.9 </span><span class="s1">-&gt; </span><span class="s2">&quot;😐&quot;</span>
+        <span class="s1">imc &lt; </span><span class="s3">34.9 </span><span class="s1">-&gt; </span><span class="s2">&quot;😟&quot;</span>
+        <span class="s1">imc &lt; </span><span class="s3">39.9 </span><span class="s1">-&gt; </span><span class="s2">&quot;😧&quot;</span>
+        <span class="s0">else </span><span class="s1">-&gt; </span><span class="s2">&quot;😱&quot;</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+
+<span class="s1">@Preview(showBackground = </span><span class="s0">true</span><span class="s1">)</span>
+<span class="s1">@Composable</span>
+<span class="s0">fun </span><span class="s1">PreviewCalculadoraIMC() {</span>
+    <span class="s1">CalculadoraIMCTheme {</span>
+        <span class="s1">CalculadoraIMCScreen()</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>
